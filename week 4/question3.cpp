@@ -5,32 +5,40 @@ int main()
 {
 
     system("clear");
-    int i,l,j,a[5],b[5];
+    int i,l,n,k,j,a[10],b[10];
+    cout<<"enter size of array ";
+    cin>>n;
 
     cout<<"enter the elements ";
     for(i=0;i<=4;i++)
     {
         cin>>a[i];
     }
-for(j=0;j<2;j++)
+
+    cout<<"how many times you want to shift ";
+    cin>>k;
+
+for(j=0;j<k;j++)
 {
- {
-    
-    for(i=0;i<=3;i++)
+   b[0]=a[n-1];
+   {
+     
+    for(i=0;i<(n-1);i++)
     {
         b[i+1]=a[i];
     }
     
-    b[0]=a[4];
-}
-    for(l=0;l<5;l++)
+   
+ }
+ 
+    for(l=0;l<n;l++)
     {
         a[l]=b[l];
     }
 }
     
     
-    for(i=0;i<5;i++)
+    for(i=0;i<n;i++)
     cout<<b[i]<<" ";
 
 }
