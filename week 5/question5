@@ -1,0 +1,12 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    char *name[4]={"chetan","manu","purnima","Akash"};
+    int count=0;
+    for(int i=0;i<4;i++)
+     if(touper(name[i][0])=='A')
+     ++count;
+     cout<<"stringd starting with A= "<<count;
+     return 0;
+}

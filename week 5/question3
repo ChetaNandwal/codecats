@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    int x=5,y=6,z;
+    int add(int,int);
+    int (*ptr)(int,int);
+    ptr=add;
+    z=(*ptr)(x,y);
+    cout<<"result addition "<<x;
+    return 0;
+
+}
+int add (int x,int y)
+{
+    return (x+y);
+}

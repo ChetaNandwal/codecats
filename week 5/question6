@@ -1,0 +1,9 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    int x[5]={10,11,12,13,14};
+    for(int i=0;i<5;i++)
+    cout<<"\n x["<<i<<"]="<<x[i]<<"\t"<<"*(x+"<<i<<")="<<*(x+i);
+    return 0;
+}
