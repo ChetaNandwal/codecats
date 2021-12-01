@@ -10,7 +10,7 @@ int main()
     cin>>n;
 
     cout<<"enter the elements ";
-    for(i=0;i<=4;i++)
+    for(i=0;i<=n;i++)
     {
         cin>>a[i];
     }
