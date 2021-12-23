@@ -5,13 +5,19 @@
 #include<stdlib.h>
 
 using namespace std;
+
 int cnt=0;
 int isbuy=0; 
 int r=0;
+float res=0;
 int item_id[10]={0};
 string item_name[10];
 int  item_price[10]={0};
 int  item_disc[10]={0};
+int  purchased=0;
+string uname,pss;
+
+
 
 void display_item();
 void signup();
@@ -20,8 +26,12 @@ void display();
 void select();
 void display_menu();
 void contact_us();
-int show_cart(int);
+void exit();
+int show_cart(int,int);
 int  cart(int );
+int confirm_purchase(int);
+
+
 
 struct data
 {
@@ -35,8 +45,9 @@ struct data
  int main()
 {
    system("clear");
-   display();
    
+   if(cnt==0) display();
+   else display_menu();
     
 }
 
@@ -94,7 +105,7 @@ void signup()
 {
     system("clear");
     cout<<"            ****************************************"<<"\n";
-    cout<<"                        -ZODIAC-   SHOES            "<<"\n";
+    cout<<"                        -ZODIAC-   SHOES       i     "<<"\n";
     cout<<"            ****************************************"<<"\n";
     cout<<"\n";   
     cout<<"***************************"<<"\n";
@@ -133,7 +144,7 @@ void signup()
     cout<<" \tPRESS ANY KEY TO CONTINUE....."<<"\n";
     system("read");
    
-      display();
+      main();
 
 
 }
@@ -147,7 +158,7 @@ void signin()
     cout<<"            ****************************************"<<"\n";
     cout<<"\n";   
     //int count=0;
-    string uname,pss;
+   
     string u,p;
 
     cout<<"***********************"<<"\n";
@@ -179,22 +190,25 @@ void signin()
            cout<<"PRESS ANY KEY TO CONTINUE......"<<"\n";
            
            system("read"); 
-         display();
+         main();
     }
-else 
-{
-  cout<<" \tWRONG PASSWORD OR USERNAME   "<<"\n";
-  cout<<"  \tPRESS ENTER TO TRY AGAIN!    "<<"\n";
-  system("read");
-  display();
-}
+    else 
+        {
+          cout<<" \tWRONG PASSWORD OR USERNAME   "<<"\n";
+          cout<<"  \tPRESS ENTER TO TRY AGAIN!    "<<"\n";
+          system("read");
+          display();
+        }
  
-    in.close();
+        in.close();
 
 
-} 
+    } 
+
+
 
 void display_menu()
+
 {
           system("clear");
     cout<<"            ****************************************"<<"\n";
@@ -204,21 +218,19 @@ void display_menu()
     cout<<"\n";
 
     cout<<"===============================================\n";
-    cout<<"|                                             |\n";
-    cout<<"|      1.DISPLAY ITEMS         2.SIGNOUT      |\n";
-    cout<<"|      3.CART                  4.CONTACT US   |\n";
-    cout<<"|                                             |\n";
+    cout<<"=                                             =\n";
+    cout<<"=      1.DISPLAY ITEMS         2.SIGNOUT      =\n";
+    cout<<"=      3.CART                  4.CONTACT US   =\n";
+    cout<<"=      5.EXIT                                 =\n";
     cout<<"===============================================\n";
-
-
+    cout<<"\n";
+     cout<<" WELCOME  "<<uname<<"\n";
     int sel_fun=0;
     cout<<" CHOOSE OPTION :: ";
     cin>>sel_fun;
 
     if(sel_fun==1)
-    {
         display_item();
-    }
     if(sel_fun==2)
     {
         cnt=0;
@@ -228,14 +240,11 @@ void display_menu()
         main();
     }
     if(sel_fun==3)
-    {
-       show_cart(isbuy);
-    }
+       show_cart(isbuy,res);
     if(sel_fun==4)
-    {
         contact_us();
-    }
-
+    if(sel_fun==5)
+        exit();
 
 }
 
@@ -260,26 +269,47 @@ void contact_us()
 
 
 
-int show_cart(int isbuy)
+int show_cart(int isbuy,int res)
 
 {
-    
+    int is_edit = 0;
       if(isbuy==1)
       {
 
            system("clear");
-            cout<<" YOUR  CART \n";
-            cout<<"===============================================\n";
-            cout<<" ID  \t ITEM NAME \t\tPRICE\tDISCOUNT \n";
-            for(int j=1;j<r;j++)
+           cout<<"\n";
+            cout<<" \tYOUR  CART \n";
+            cout<<"\t===============================================\n";
+            cout<<"\t ID  \t ITEM NAME \t\tPRICE\tDISCOUNT \n";
+            for(int j=0;j<r;j++)
             {
-
-                cout<<" "<<item_id[j]<<"\t"<<item_name[j]<<"\t"<<item_price[j]<<"\t"<<item_disc[j]<<"\n";
+                if(item_id[j]!=0 )
+                cout<<"\t "<<item_id[j]<<"\t"<<item_name[j]<<"\t"<<item_price[j]<<"\t"<<item_disc[j]<<"\n";
             
             }
-            cout<<"===============================================\n";
-                cout<<"\n";
-
+            cout<<"\t===============================================\n";
+                
+       cout<<"\n";
+          cout<<"\tTOTAL BILL :: "<<res<<"\n";
+           cout<<"\n";
+           cout<<"\n";  
+    cout<<"=====================================\n";
+    cout<<"*     1.REMOVE ELEMENTS FROM CART   *\n";
+    cout<<"*     2.CONFIRM PURCHASE            *\n";
+    cout<<"*     3.EXIT                        *\n";
+    cout<<"=====================================\n";
+    
+    cout<<"\n";
+           
+     cout<<" YOUR OPTION :: ";
+     cin>>is_edit;
+     
+     if(is_edit==1)  
+           cart(res);
+     if(is_edit==2)
+           confirm_purchase(res);
+     if(is_edit==3)
+           exit();  
 
       }
       
@@ -294,17 +324,43 @@ int show_cart(int isbuy)
      
      }
 
+}
 
+int confirm_purchase(int res)
 
+{
+    cout<<" YOUR TOTAL BILL IS :: "<<res<<"\n";
+     res=0; 
+     purchased=1;
+    isbuy=0;
 
+    int item_id[10]={0};
+    string item_name[10];
+    int  item_price[10]={0};
+    int  item_disc[10]={0};
+    r=0; 
+  
+    cout<<" ------THANKYOU FOR SHOPPING WITH US---- \n";
+    cout<<" PRESS ENTER TO CONTINUE\n ";
+    system("read");
+    
+   
+    display_menu();
+
+}
+
+void exit()
+{
+   
+    cout<<" HOPE YOU HAD A GREAT TIME \n";
+    cout<<" -----HAVE A GOOD DAY------\n";
 
 }
 
 
 
-
-
 void display_item()
+
 {
     system("clear");
     cout<<"            ****************************************"<<"\n";
@@ -335,11 +391,12 @@ cout<<"\n";
 cout<<"\n";
 
 int k=2;
-float res=0;
+
 float p=0;
 int h=0;
 
-
+if(purchased==1)
+     res=0;
 
 
 if(cnt==1)
@@ -347,16 +404,16 @@ if(cnt==1)
     
 
 
-  while(k>=1 && k<=9)
+  while(k>=1 && k<=10)
    {         
 
-   cout<<"enter id to buy / 0 to exit :: \t";
+   cout<<"Enter ID to add to the cart / 0 to go back  :: \t";
    cin>>k;
 
-       if(k>=1 && k<=9)
+       if(k>=1 && k<=10)
         {
               item_id[r] = x[k].id;
-              item_name[r] = x[k].s1;
+              item_name[r] = x[k].s1; 
               item_price[r] = x[k].price;
               item_disc[r] = x[k].disc;
               r++;
@@ -367,40 +424,22 @@ if(cnt==1)
 
       if(k==0)
          {
-            h=1;
+            
             cout<<"\n";
-           /* cout<<"  THANKYOU FOR SHOPPING WITH US  "<<"\n";
-            cout<<"  BUY SOMETHING NEXT TIME :/     \n";*/
             break;
+           
          }
       else
          {
-            p=x[k].price - (x[k].price* x[k].disc)/100;
+          isbuy=1;  h=1;
+            p=x[k].price - (x[k].price * x[k].disc)/100;
             res=res+p;
          }
 
 
     }
         
-        if(h==1)
-        {
-            isbuy=1;
-            system("clear");
-            cout<<" YOUR  CART \n";
-            cout<<"===============================================\n";
-            cout<<" ID  \t ITEM NAME \t\tPRICE\tDISCOUNT \n";
-            for(int j=0;j<r;j++)
-            {
-
-                cout<<" "<<item_id[j]<<"\t"<<item_name[j]<<"\t"<<item_price[j]<<"\t"<<item_disc[j]<<"\n";
-            
-            }
-            cout<<"===============================================\n";
-                cout<<"\n";
-                cout<<"    YOUR TOTAL BILL IS :: $ "<<res<<"\n";
-                cout<<"\n";
-                cart(res);
-        }
+   display_menu();       
 
          
 }
@@ -419,6 +458,7 @@ else
 int  cart(int res)
 {
     char rem;
+    int is_change=0;
     int cart_id=0;
     float bill=0;
     do
@@ -428,15 +468,32 @@ int  cart(int res)
 
 
     if(rem=='Y' | rem=='y')
-    {
+    { 
+        is_change=1;
         cout<<"  ENTER THE ID OF THE ITEM WHICH YOU WANT TO REMOVE :: \n";
         cin>>cart_id;
-        
-        bill=x[cart_id].price - (x[cart_id].price * x[cart_id].disc)/100;
-        res=res-bill;
+         
+         for(int i=0;i<r;i++)
+         {
+             if(item_id[i]==cart_id)
+             {
+                 item_id[i]=0; item_name[i]='0'; item_price[i]=0; item_disc[i]=0;
+             }
+            
+
+         }
+                    
+
+               bill=x[cart_id].price - (x[cart_id].price * x[cart_id].disc)/100;
+               res=res-bill;
     }
-    else break;
+        else break;
     }while( rem=='y' || rem=='Y');
+
+if(is_change==1)
+{
+    show_cart(isbuy,res);
+}
 
 cout<<" FINAL BILL :: "<<res;
 
